@@ -4,7 +4,7 @@
   src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
   integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc="
   crossorigin="anonymous"></script>
-  <script src="quizly.js"></script>
+  <script src="../quizly.js"></script>
   <script>
     $(document).ready(function(){
       quizly = new Quizly('quiz');
@@ -14,23 +14,25 @@
 <body>
   <div id="quiz" data-quiz>
     <label>What is the capital of england?
-      <input type="text" name="" placeholder="What is the capital of england?" data-answer="london"/><br>
+      <input type="text" name="city" placeholder="What is the capital of england?" data-answer="london"/><br>
     </label>
-    <label>Which of the following are mammals?<br>
-      <input type="checkbox" name="mammal" value="1" data-answer="1,4"/> Human<br>
-      <input type="checkbox" name="mammal" value="2" data-answer="1,4"/> Crow<br>
-      <input type="checkbox" name="mammal" value="3" data-answer="1,4"/> Goldfish<br>
-      <input type="checkbox" name="mammal" value="4" data-answer="1,4"/> Deer<br>
-    </label>
-    <label> True or False, fish are invertibrates?<br>
-      <input type="radio" name="invert" value=true data-answer="false"/>True
-      <input type="radio" name="invert" value="false" data-answer="false"/>False <br>
-    </label>
+    <div data-quiz-container>
+      <span data-answer="1,4">Which of the following are mammals?</span><br>
+      <label><input type="checkbox" name="mammal" value="1"/> Human</label><br>
+      <label><input type="checkbox" name="mammal" value="2"/> Crow</label><br>
+      <label><input type="checkbox" name="mammal" value="3"/> Goldfish</label><br>
+      <label><input type="checkbox" name="mammal" value="4"/> Deer</label><br>
+    </div>
+    <div data-quiz-container>
+      <span data-answer="false">True or False, fish are invertibrates?</span><br>
+      <label><input type="radio" name="invert" value=true data-answer="false"/>True</label><br>
+      <label><input type="radio" name="invert" value="false" data-answer="false"/>False</label><br>
+    </div>
     <label> 2 + 8 * 4 = ?
       <input type="number" name="math" placeholder="PEMDAS" data-answer="34"/><br>
     </label>
     <label>Fill in the blanks: America was discovered in
-      <select name="" multiple data-answer="1492,1290">
+      <select name="discover" multiple data-answer="1492,1290">
         <option val="1290">1290</option>
         <option val="1435">1435</option>
         <option val="1490">1490</option>
@@ -39,7 +41,7 @@
         <option val="1479">1479</option>
       </select>
       and founded in
-      <select name="" data-answer="1776">
+      <select name="found" data-answer="1776">
         <option val="1776">1776</option>
         <option val="1677">1677</option>
         <option val="1781">1781</option>

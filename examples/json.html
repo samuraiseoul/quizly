@@ -1,0 +1,112 @@
+<html>
+<head>
+  <script
+  src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
+  integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc="
+  crossorigin="anonymous"></script>
+  <script src="../quizly.js"></script>
+  <script>
+    $(document).ready(function(){
+      quizly = new Quizly('quiz', [
+        {
+          name: "city",
+          type: "input",
+          answer: "london",
+          answers: [],
+          value: "",
+          values: [],
+          placeholder: "",
+          multiple: "",
+          question: "What is the capital of the United Kingdom?"
+        },
+        {
+          name: "mammal",
+          type: "checkbox",
+          answer: "",
+          answers: [1,4],
+          value: "",
+          values: [
+            {
+              value: "1",
+              label: "Human"
+            },
+            {
+              value: "2",
+              label: "Crow"
+            },
+            {
+              value: "3",
+              label: "Goldfish"
+            },
+            {
+              value: "4",
+              label: "Deer"
+            }
+          ],
+          placeholder: "",
+          multiple: "true",
+          question: "Which of the following are mammals?"
+        },
+        {
+          name: "notmammal",
+          type: "checkbox",
+          answer: "3",
+          answers: [],
+          value: "",
+          values: [
+            {
+              value: "1",
+              label: "Human"
+            },
+            {
+              value: "3",
+              label: "Goldfish"
+            },
+            {
+              value: "4",
+              label: "Deer"
+            }
+          ],
+          placeholder: "",
+          multiple: "true",
+          question: "Which of the following are not mammals?"
+        },
+        {
+          name: "vertibrates",
+          type: "radio",
+          answer: "0",
+          answers: [],
+          value: "",
+          values: [
+            {
+              value: "1",
+              label: "True"
+            },
+            {
+              value: "0",
+              label: "False"
+            }
+          ],
+          placeholder: "",
+          multiple: "",
+          question: "Fish are vertibrates?"
+        },
+        {
+          name: "founded",
+          type: "select",
+          answers: [],
+          answer: "1776",
+          value: "",
+          values: [1778,1777,1776,2779,1234],
+          placeholder: "",
+          multiple: "false",
+          question: "When was the USA founded?"
+        }
+      ]);
+    });
+  </script>
+</head>
+<body>
+  <div id="quiz" data-quiz></div>
+</body>
+</html>
