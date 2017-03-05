@@ -11,25 +11,33 @@
       quizly = new Quizly('quiz');
     });
   </script>
+  <style>
+    .wrong{
+      color: red;
+    }
+    .right{
+      color: green;
+    }
+  </style>
 </head>
 <body>
   <div id="quiz" data-quiz>
-    <label>What is the capital of england?
+    <label>What is the capital of england?<span class="right" data-right>Marvelous</span><span class="wrong" data-wrong>Where is the bridge falling down?</span>
       <input type="text" name="city" placeholder="What is the capital of england?" data-answer="london"/><br>
     </label>
     <div data-quiz-container>
-      <span data-answer="1,4">Which of the following are mammals?</span><br>
+      <span data-answer="1,4">Which of the following are mammals?</span><span class="right" data-right>Wonderful!</span><span class="wrong" data-wrong>Mammals have hair.</span><br>
       <label><input type="checkbox" name="mammal" value="1"/> Human</label><br>
       <label><input type="checkbox" name="mammal" value="2"/> Crow</label><br>
       <label><input type="checkbox" name="mammal" value="3"/> Goldfish</label><br>
       <label><input type="checkbox" name="mammal" value="4"/> Deer</label><br>
     </div>
     <div data-quiz-container>
-      <span data-answer="false">True or False, fish are invertibrates?</span><br>
+      <span data-answer="false">True or False, fish are invertibrates?</span><span class="right" data-right>Right</span><span class="wrong" data-wrong>Remember, invertibrates have no spines.</span><br>
       <label><input type="radio" name="invert" value=true data-answer="false"/>True</label><br>
       <label><input type="radio" name="invert" value="false" data-answer="false"/>False</label><br>
     </div>
-    <label> 2 + 8 * 4 = ?
+    <label> 2 + 8 * 4 = ?<span class="right" data-right>Correct!</span><span class="wrong" data-wrong>Multiply first</span>
       <input type="number" name="math" placeholder="PEMDAS" data-answer="34"/><br>
     </label>
     <label>Fill in the blanks: America was discovered in
@@ -50,7 +58,7 @@
         <option val="1672">1672</option>
         <option val="1648">1648</option>
       </select>
-      .
+      . <span class="right" data-right>Correct</span><span class="wrong" data-wrong>Incorrect</span>
     </label>
   </div>
 </body>

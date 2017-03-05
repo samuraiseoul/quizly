@@ -18,7 +18,9 @@
           values: [],
           placeholder: "",
           multiple: "",
-          question: "What is the capital of the United Kingdom?"
+          question: "What is the capital of the United Kingdom?",
+          right: "",
+          wrong: "Where is the bridge falling down?"
         },
         {
           name: "mammal",
@@ -46,7 +48,9 @@
           ],
           placeholder: "",
           multiple: "true",
-          question: "Which of the following are mammals?"
+          question: "Which of the following are mammals?",
+          right: "",
+          wrong: ""
         },
         {
           name: "notmammal",
@@ -70,7 +74,9 @@
           ],
           placeholder: "",
           multiple: "true",
-          question: "Which of the following are not mammals?"
+          question: "Which of the following are not mammals?",
+          right: "",
+          wrong: ""
         },
         {
           name: "vertibrates",
@@ -90,7 +96,9 @@
           ],
           placeholder: "",
           multiple: "",
-          question: "Fish are vertibrates?"
+          question: "Fish are vertibrates?",
+          right: "",
+          wrong: "Remember, invertibrates have no spines."
         },
         {
           name: "founded",
@@ -101,11 +109,21 @@
           values: [1778,1777,1776,2779,1234],
           placeholder: "",
           multiple: "false",
-          question: "When was the USA founded?"
+          question: "When was the USA founded?",
+          right: "",
+          wrong: ""
         }
       ]);
     });
   </script>
+  <style>
+    .wrong{
+      color: red;
+    }
+    .right{
+      color: green;
+    }
+  </style>
 </head>
 <body>
   <div id="quiz" data-quiz></div>

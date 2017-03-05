@@ -1,8 +1,11 @@
 function QuizlyTemplate(container){
   this.container = container;
 
-  createLabel = function(question){
-    return $(document.createElement('label')).append(question).append('<br>');
+  createLabel = function(question, includeRightWrong, right, wrong){
+    return $(document.createElement('label'))
+    .append(question)
+    .append(includeRightWrong ? createRightWrong(right, wrong) : '')
+    .append('<br>');
   }
   createSelectElement = function(answer, name){
     return $(document.createElement('select'))
@@ -14,18 +17,27 @@ function QuizlyTemplate(container){
       .val(value)
       .text(text);
   }
-  createQuestionContainer = function(text, answer){
+  createQuestionContainer = function(text, answer, right, wrong){
     return $(document.createElement('div')).attr('data-quiz-container', '').append(
       $(document.createElement('span'))
         .text(text)
         .attr('data-answer', answer)
-        .append('<br>')
-    );
+    )
+    .append(createRightWrong(right, wrong))
+    .append('<br>');
   }
   createInput = function(type, name){
     return $(document.createElement('input'))
       .attr('type', type)
       .attr('name', name);
+  }
+  createRightWrong = function(right, wrong){
+    return [
+      $(document.createElement('span'))
+      .text(right ? right : "Correct").addClass('right'),
+      $(document.createElement('span'))
+        .text(wrong ? wrong : "Incorrect").addClass('wrong')
+      ];
   }
 }
 
@@ -36,11 +48,13 @@ QuizlyTemplate.prototype.createSelect = function(question){
       var $option = createOption(question.values[j], question.values[j]);
       $select.append($option);
     }
-    this.container.append(createLabel(question.question).append($select).append('<br>'));
+    this.container.append(createLabel(question.question, true, question.right, question.wrong)
+    .append($select)
+    .append('<br>'));
 }
 
 QuizlyTemplate.prototype.createCheckboxOrRadio = function(question){
-    var $questionContainer = createQuestionContainer(question.question, question.answers.length ? question.answers.join(',') : question.answer);
+    var $questionContainer = createQuestionContainer(question.question, question.answers.length ? question.answers.join(',') : question.answer, question.right, question.wrong);
     this.container.append($questionContainer);
     for(var j = 0; j < question.values.length; j++){
       var value = question.values[j];
@@ -51,8 +65,7 @@ QuizlyTemplate.prototype.createCheckboxOrRadio = function(question){
 }
 
 QuizlyTemplate.prototype.createInput = function(question){
-    var $label = createLabel(question.question);
-    this.container.append(createLabel(question.question).append(
+    this.container.append(createLabel(question.question, true, question.right, question.wrong).append(
       createInput(question.type, question.name)
         .attr('data-answer', question.answer)
         .attr('placeholder', question.placeholder)
