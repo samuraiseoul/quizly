@@ -14,6 +14,19 @@ function QuizlyTemplate(container){
       .val(value)
       .text(text);
   }
+  createQuestionContainer = function(text, answer){
+    return $(document.createElement('div')).attr('data-quiz-container', '').append(
+      $(document.createElement('span'))
+        .text(text)
+        .attr('data-answer', answer)
+        .append('<br>')
+    );
+  }
+  createInput = function(type, name){
+    return $(document.createElement('input'))
+      .attr('type', type)
+      .attr('name', name);
+  }
 }
 
 QuizlyTemplate.prototype.createSelect = function(question){
@@ -27,32 +40,21 @@ QuizlyTemplate.prototype.createSelect = function(question){
 }
 
 QuizlyTemplate.prototype.createCheckboxOrRadio = function(question){
-    var $questionLabel = $(document.createElement('span'))
-      .text(question.question)
-      .attr('data-answer', question.answers.length ? question.answers.join(',') : question.answer)
-      .append('<br>');
-    var $questionContainer = $(document.createElement('div')).attr('data-quiz-container', '').append($questionLabel);
+    var $questionContainer = createQuestionContainer(question.question, question.answers.length ? question.answers.join(',') : question.answer);
     this.container.append($questionContainer);
     for(var j = 0; j < question.values.length; j++){
       var value = question.values[j];
-      var val = typeof value === 'object' ? value.value : value;
-      var $label = createLabel(typeof value === 'object' ? value.label : value);
+      var $label = createLabel(typeof value === 'object' ? value.label : value)
+        .prepend(createInput(question.type, question.name).val(typeof value === 'object' ? value.value : value));
       $questionContainer.append($label);
-      var $input = $(document.createElement('input'))
-        .attr('type', question.type)
-        .attr('name', question.name)
-        .val(val);
-      $label.prepend($input);
     }
 }
 
 QuizlyTemplate.prototype.createInput = function(question){
     var $label = createLabel(question.question);
     this.container.append(createLabel(question.question).append(
-      $(document.createElement('input'))
+      createInput(question.type, question.name)
         .attr('data-answer', question.answer)
-        .attr('type', question.type)
-        .attr('name', question.name)
         .attr('placeholder', question.placeholder)
     ));
 }
