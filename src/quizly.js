@@ -22,7 +22,8 @@ function Quizly(id, data){
 
     var handler = function($input){
       var values = getValues($input, self);
-      var answer = $input.parents('div[data-quiz-container]').length ? $input.parents('div[data-quiz-container]').find('span').attr('data-answer') : $input.attr('data-answer');
+      var $container = $input.parents('div[data-quiz-container]').length? $input.parents('div[data-quiz-container]') : $input.parent();
+      var answer = $container.find('[data-answer]').attr('data-answer');
       var answers = answer.includes(',') ? answer.split(',') : [answer];
 
       var correct = true;
@@ -32,9 +33,12 @@ function Quizly(id, data){
           break;
         }
       }
-      console.log("Values: " + values);
-      console.log("Answers: " + answers);
-      console.log("Result: " + (correct && (values.length == answers.length)));
+      $container.find('.right, .wrong').hide();
+      if((correct && (values.length == answers.length))) {
+        $container.find('.right').show();
+      } else {
+          $container.find('.wrong').show();
+      }
     };
 
     var createQuizHtml = function(container, data){
@@ -55,5 +59,6 @@ function Quizly(id, data){
     if(data){
       createQuizHtml(this.container, data);
     }
-    this.container.on('change', 'input, select', function(){handler($(this))});
+    this.container.on('change', 'input, select', function(){handler($(this))})
+    .find('.right, .wrong').hide();
 }
