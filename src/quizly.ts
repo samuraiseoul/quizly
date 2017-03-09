@@ -1,5 +1,3 @@
-///<reference path="./template.ts"/>
-
 class Quizly{
     container: HTMLElement;
     self;
