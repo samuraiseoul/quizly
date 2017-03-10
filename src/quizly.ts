@@ -47,7 +47,7 @@ class Quizly{
       return answer.split(',');
     }
 
-    private handler(input: HTMLInputElement, quizly: Quizly){
+    private handler(input: HTMLInputElement, quizly: Quizly) :void{
       var values :Array<string>= quizly.getValues(input, quizly);
       var grandparent = <HTMLElement>input.parentNode.parentNode;
       var container = grandparent !== null && grandparent.hasAttribute('data-quiz-container') ? <HTMLElement>input.parentNode.parentNode : <HTMLElement>input.parentNode;
@@ -74,7 +74,7 @@ class Quizly{
       }
     };
 
-    private createQuizHtml(container :HTMLElement, data :Array<QuizlyQuestion>){
+    private createQuizHtml(container :HTMLElement, data :Array<QuizlyQuestion>) :void{
       for(var i = 0; i < data.length; i++){
         var question = data[i];
         if(question.type == "select") {

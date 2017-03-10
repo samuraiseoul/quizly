@@ -10,10 +10,4 @@ class QuizlyQuestion{
   question :string;
   right :string;
   wrong :string;
-
-  // constructor(name :string, type :string, question :string, answer? :string, answers? :Array<string>,
-  // value? :string, values? :Array<string>, placeholder? :string, multiple? :string,
-  //  right? :string, wrong? :string){
-  //
-  // }
 }
