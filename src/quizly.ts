@@ -1,11 +1,9 @@
 class Quizly{
     container: HTMLElement;
-    self;
     template: QuizlyTemplater;
 
-    constructor(id: string, data){
+    constructor(id: string, data :Array<QuizlyQuestion>){
       this.container = document.getElementById(id);
-      this.self = this;
       var that = this;
       this.template = new QuizlyTemplater(this.container);
 
@@ -14,7 +12,10 @@ class Quizly{
       }
       [].forEach.call(this.container.querySelectorAll('input, select'), function(el){
         el.quizly = that;
-        el.addEventListener('change', that.handler);
+        el.addEventListener('change', function(event: Event){
+          var input = <HTMLInputElement>event.srcElement;
+          that.handler(input, that);
+        });
       });
 
       var resultSpans = this.container.querySelectorAll('.right, .wrong');
@@ -23,15 +24,16 @@ class Quizly{
       }
     }
 
-    private getValues(input, self){
+    private getValues(input: HTMLInputElement, self: Quizly) :Array<string>{
       var typeAttr = input.getAttribute('type');
       var value = null;
 
       if(typeAttr && typeAttr.toLowerCase() == 'checkbox'){
-        var checked = input.quizly.container.querySelectorAll('input[name=' + input.getAttribute('name') + ']:checked');
+        var checked = this.container.querySelectorAll('input[name=' + input.getAttribute('name') + ']:checked');
         var values = [];
         for(var i = 0; i < checked.length; i++){
-          values.push(checked[i].value);
+          var check = <HTMLInputElement>checked[i];
+          values.push(check.value);
         }
         value = values;
       } else {
@@ -40,12 +42,16 @@ class Quizly{
       return value instanceof Array ? value : [value];
     }
 
-    private handler(event){
-      var input = event.srcElement;
-      var values = input.quizly.getValues(input, self);
-      var container = input.parentNode.parentNode !== null ? input.parentNode.parentNode : input.parentNode;
-      var answer = container.querySelector('[data-answer]').getAttribute('data-answer');
-      var answers = answer.includes(',') ? answer.split(',') : [answer];
+    private parseAnswer(answer :string) :Array<string>{
+      answer = answer.replace('[|]', '');
+      return answer.split(',');
+    }
+
+    private handler(input: HTMLInputElement, quizly: Quizly) :void{
+      var values :Array<string>= quizly.getValues(input, quizly);
+      var grandparent = <HTMLElement>input.parentNode.parentNode;
+      var container = grandparent !== null && grandparent.hasAttribute('data-quiz-container') ? <HTMLElement>input.parentNode.parentNode : <HTMLElement>input.parentNode;
+      var answers = quizly.parseAnswer(container.querySelector('[data-answer]').getAttribute('data-answer'));
 
       var correct = true;
       for(var i =0; i < values.length; i++){
@@ -56,16 +62,19 @@ class Quizly{
       }
       var resultSpans = container.querySelectorAll('.right, .wrong');
       for(var i = 0; i < resultSpans.length; i++){
-        resultSpans[i].style.display = 'none';
+        var resultSpan = <HTMLElement>resultSpans[i];
+        resultSpan.style.display = 'none';
       }
       if((correct && (values.length == answers.length))) {
-        container.querySelector('.right').style.display = '';
+        var right = <HTMLElement>container.querySelector('.right');
+        right.style.display = '';
       } else {
-        container.querySelector('.wrong').style.display = '';
+        var wrong = <HTMLElement>container.querySelector('.wrong');
+        wrong.style.display = '';
       }
     };
 
-    private createQuizHtml(container, data){
+    private createQuizHtml(container :HTMLElement, data :Array<QuizlyQuestion>) :void{
       for(var i = 0; i < data.length; i++){
         var question = data[i];
         if(question.type == "select") {

@@ -3,7 +3,7 @@ class QuizlyTemplater {
   constructor(container: HTMLElement){
     this.container = container;
   }
-  private createLabel(question: string, includeRightWrong?, right?, wrong?) {
+  private createLabel(question: string, includeRightWrong? :boolean, right? :string, wrong? :string) :HTMLLabelElement{
         var label = document.createElement('label');
         label.textContent = question;
         if(includeRightWrong){
@@ -16,19 +16,19 @@ class QuizlyTemplater {
         label.appendChild(br);
         return label;
   }
-  private createSelectElement(answer: string, name: string) {
+  private createSelectElement(answer: string, name: string) :HTMLSelectElement{
       var select = document.createElement('select');
       select.setAttribute('data-answer', answer);
       select.setAttribute('name', name);
       return select;
   }
-  private createOption(value: string, text: string) {
+  private createOption(value: string, text: string) :HTMLOptionElement{
       var option= document.createElement('option');
       option.value = value;
       option.textContent = text;
       return option;
   }
-  private createQuestionContainer(text: string, answer: string, right: string, wrong: string) {
+  private createQuestionContainer(text: string, answer: string, right: string, wrong: string) :HTMLDivElement{
       var div = document.createElement('div')
       div.setAttribute('data-quiz-container', '');
       var span = document.createElement('span');
@@ -42,24 +42,24 @@ class QuizlyTemplater {
       div.appendChild(document.createElement('br'));
       return div;
   }
-  private createInputElement(type, name) {
+  private createInputElement(type :string, name :string) :HTMLInputElement{
       var input = document.createElement('input');
       input.setAttribute('type', type);
       input.setAttribute('name', name);
       return input;
   }
-  private createRightWrong(rightText, wrongText) {
-    var right: Element = document.createElement('span');
+  private createRightWrong(rightText: string, wrongText :string) :Array<HTMLSpanElement>{
+    var right :HTMLSpanElement = document.createElement('span');
     right.textContent = rightText ? rightText : "Correct";
     right.classList.add('right');
-    var wrong: Element = document.createElement('span');
+    var wrong :HTMLSpanElement = document.createElement('span');
     wrong.textContent = wrongText ? wrongText : "Incorrect"
     wrong.classList.add('wrong');
     return [right, wrong];
   }
 
 
-  public createSelect(question) {
+  public createSelect(question :QuizlyQuestion) :void{
       var answer = question.answers.length ? question.answers.join(',') : question.answer;
       var select = this.createSelectElement(answer, question.name);
       for (var j = 0; j < question.values.length; j++) {
@@ -71,7 +71,7 @@ class QuizlyTemplater {
       label.appendChild(document.createElement('br'));
       this.container.appendChild(label);
   }
-  public createCheckboxOrRadio(question) {
+  public createCheckboxOrRadio(question :QuizlyQuestion) :void{
       var questionContainer = this.createQuestionContainer(question.question, question.answers.length ? question.answers.join(',') : question.answer, question.right, question.wrong);
       this.container.appendChild(questionContainer);
       for (var j = 0; j < question.values.length; j++) {
@@ -83,7 +83,7 @@ class QuizlyTemplater {
           questionContainer.appendChild(label);
       }
   }
-  public createInput(question) {
+  public createInput(question :QuizlyQuestion) :void{
     var label = this.createLabel(question.question, true, question.right, question.wrong);
     var input = this.createInputElement(question.type, question.name);
     input.setAttribute('data-answer', question.answer);
