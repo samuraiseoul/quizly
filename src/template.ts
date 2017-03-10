@@ -3,7 +3,7 @@ class QuizlyTemplater {
   constructor(container: HTMLElement){
     this.container = container;
   }
-  private createLabel(question: string, includeRightWrong?, right?, wrong?) {
+  private createLabel(question: string, includeRightWrong? :boolean, right? :string, wrong? :string) {
         var label = document.createElement('label');
         label.textContent = question;
         if(includeRightWrong){
@@ -42,13 +42,13 @@ class QuizlyTemplater {
       div.appendChild(document.createElement('br'));
       return div;
   }
-  private createInputElement(type, name) {
+  private createInputElement(type :string, name :string) {
       var input = document.createElement('input');
       input.setAttribute('type', type);
       input.setAttribute('name', name);
       return input;
   }
-  private createRightWrong(rightText, wrongText) {
+  private createRightWrong(rightText: string, wrongText :string) {
     var right: Element = document.createElement('span');
     right.textContent = rightText ? rightText : "Correct";
     right.classList.add('right');
@@ -59,7 +59,7 @@ class QuizlyTemplater {
   }
 
 
-  public createSelect(question) {
+  public createSelect(question :QuizlyQuestion) {
       var answer = question.answers.length ? question.answers.join(',') : question.answer;
       var select = this.createSelectElement(answer, question.name);
       for (var j = 0; j < question.values.length; j++) {
@@ -71,7 +71,7 @@ class QuizlyTemplater {
       label.appendChild(document.createElement('br'));
       this.container.appendChild(label);
   }
-  public createCheckboxOrRadio(question) {
+  public createCheckboxOrRadio(question :QuizlyQuestion) {
       var questionContainer = this.createQuestionContainer(question.question, question.answers.length ? question.answers.join(',') : question.answer, question.right, question.wrong);
       this.container.appendChild(questionContainer);
       for (var j = 0; j < question.values.length; j++) {
@@ -83,7 +83,7 @@ class QuizlyTemplater {
           questionContainer.appendChild(label);
       }
   }
-  public createInput(question) {
+  public createInput(question :QuizlyQuestion) {
     var label = this.createLabel(question.question, true, question.right, question.wrong);
     var input = this.createInputElement(question.type, question.name);
     input.setAttribute('data-answer', question.answer);
