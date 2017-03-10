@@ -46,9 +46,13 @@ class Quizly{
       answer = answer.replace(/\[|\]/g, '');
       var answers =  answer.match(/([^\\\][^,]|\\,)+/g);
       for(var i = 0; i < answers.length; i++) {
-        answers[i] = answers[i].replace('\\,', ',');
+        answers[i] = this.normalize(answers[i]);
       }
       return answers;
+    }
+
+    private normalize(text :string){
+      return text.replace('\\,', ',').trim().replace(/^[0]+/g,"").toLowerCase()
     }
 
     private handler(input: HTMLInputElement, quizly: Quizly) :void{
@@ -59,7 +63,7 @@ class Quizly{
 
       var correct = true;
       for(var i =0; i < values.length; i++){
-        if(answers.indexOf(values[i]) == -1){
+        if(answers.indexOf(quizly.normalize(values[i])) == -1){
           correct = false;
           break;
         }
