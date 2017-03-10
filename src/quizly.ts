@@ -44,7 +44,7 @@ class Quizly{
 
     private parseAnswer(answer :string) :Array<string>{
       answer = answer.replace(/\[|\]/g, '');
-      var answers =  answer.split("(?<!\\\\),");
+      var answers =  answer.match(/([^\\\][^,]|\\,)+/g);
       for(var i = 0; i < answers.length; i++) {
         answers[i] = answers[i].replace('\\,', ',');
       }
