@@ -43,8 +43,12 @@ class Quizly{
     }
 
     private parseAnswer(answer :string) :Array<string>{
-      answer = answer.replace('[|]', '');
-      return answer.split(',');
+      answer = answer.replace(/\[|\]/g, '');
+      var answers =  answer.split("(?<!\\\\),");
+      for(var i = 0; i < answers.length; i++) {
+        answers[i] = answers[i].replace('\\,', ',');
+      }
+      return answers;
     }
 
     private handler(input: HTMLInputElement, quizly: Quizly) :void{
