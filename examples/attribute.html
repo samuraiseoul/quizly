@@ -26,11 +26,20 @@
     </div>
     <div data-quiz-container>
       <span data-answer="false">True or False, fish are invertibrates?</span><span class="right" data-right>Right</span><span class="wrong" data-wrong>Remember, invertibrates have no spines.</span><br>
-      <label><input type="radio" name="invert" value=true data-answer="false"/>True</label><br>
-      <label><input type="radio" name="invert" value="false" data-answer="false"/>False</label><br>
+      <label><input type="radio" name="invert" value="true"/>True</label><br>
+      <label><input type="radio" name="invert" value="false"/>False</label><br>
     </div>
     <label> 2 + 8 * 4 = ?<span class="right" data-right>Correct!</span><span class="wrong" data-wrong>Multiply first</span>
       <input type="number" name="math" placeholder="PEMDAS" data-answer="34"/><br>
+    </label>
+    <label>When was the USA founded?<span class="right" style="display: none;">Correct</span><span class="wrong" style="display: none;">Incorrect</span><br>
+      <select data-answer="1776" name="founded">
+        <option value="1778">1778</option>
+        <option value="1777">1777</option>
+        <option value="1776">1776</option>
+        <option value="2779">2779</option>
+        <option value="1234">1234</option>
+      </select><br>
     </label>
   </div>
 </body>
