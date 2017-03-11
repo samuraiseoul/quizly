@@ -1,3 +1,4 @@
+//format of questions for quizly data
 class QuizlyQuestion{
   name :string;
   type :string;

@@ -89,7 +89,7 @@ class QuizlyTemplater {
           questionContainer.appendChild(label);
       }
   }
-  
+
   public createInput(question :QuizlyQuestion) :void{
     var label = this.createLabel(question.question, true, question.right, question.wrong);
     var input = this.createInputElement(question.type, question.name);

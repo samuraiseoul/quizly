@@ -25,6 +25,8 @@ class Quizly{
   private bindListener(){
     var that = this;
     [].forEach.call(this.container.querySelectorAll('input, select'), function(el){
+      //bind reference so it's available in the handler.
+      //don't assign type check til after or typescript complains about the custom property
       el.quizly = that;
       el.addEventListener('change', function(event: Event){
         var input = <HTMLInputElement>event.srcElement;
@@ -68,7 +70,7 @@ class Quizly{
     return values;
   }
 
-  private parseAnswer(answer :string) :Array<string>{
+  private parseAnswers(answer :string) :Array<string>{
     answer = answer.replace(/\[|\]/g, '');
     var answers =  answer.match(/([^\\\][^,]|\\,)+/g);
     for(var i = 0; i < answers.length; i++) {
@@ -86,7 +88,7 @@ class Quizly{
     return grandparent !== null && grandparent.hasAttribute('data-quiz-container') ? <HTMLElement>input.parentNode.parentNode : <HTMLElement>input.parentNode;
   }
 
-  private checkAnswer(answers: Array<string>, values: Array<string>): boolean{
+  private checkAnswers(answers: Array<string>, values: Array<string>): boolean{
     var correct = true;
     for(var i =0; i < values.length; i++){
       if(answers.indexOf(this.normalize(values[i])) == -1){
@@ -115,9 +117,9 @@ class Quizly{
   private handler(input: HTMLInputElement, quizly: Quizly) :void{
     var values :Array<string>= quizly.getValues(input, quizly);
     var container = quizly.getInputContainer(input);
-    var answers = quizly.parseAnswer(container.querySelector('[data-answer]').getAttribute('data-answer'));
+    var answers = quizly.parseAnswers(container.querySelector('[data-answer]').getAttribute('data-answer'));
 
-    var correct = quizly.checkAnswer(answers, values);
+    var correct = quizly.checkAnswers(answers, values);
     quizly.displayResults(container, correct);
   };
 
@@ -134,3 +136,45 @@ class Quizly{
     }
   }
 }
+
+
+/**
+Example Data Structure for Quizly
+[
+  {
+    name: "",
+    type: "",
+    answer: "",
+    answers: [],
+    value: "",
+    values: [],
+    placeholder: "",
+    multiple: "",
+    question: "",
+    right: "",
+    wrong: ""
+  },
+  {
+    name: "",
+    type: "checkbox", //or radio
+    answer: "",
+    answers: [],
+    value: "",
+    values: [
+      {
+        value: "",
+        label: ""
+      },
+      {
+        value: "",
+        label: ""
+      }
+    ],
+    placeholder: "",
+    multiple: "",
+    question: "",
+    right: "",
+    wrong: ""
+  }
+]
+**/
