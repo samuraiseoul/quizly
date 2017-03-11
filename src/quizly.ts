@@ -2,8 +2,19 @@ class Quizly{
     container: HTMLElement;
     template: QuizlyTemplater;
 
-    constructor(id: string, data :Array<QuizlyQuestion>){
-      this.container = document.getElementById(id);
+    constructor(target: HTMLElement, data? :Array<QuizlyQuestion>)
+    constructor(target: any, data? :Array<QuizlyQuestion>){
+      if(typeof target === 'string'){
+        this.container = document.getElementById(target);
+        if(!this.container) {
+          throw "Invalid id, please check your spelling.";
+        }
+      } else if(target instanceof HTMLElement) {
+        this.container = target;
+      } else {
+        throw "First parameter passed into Quizly must be an element or element Id!";
+      }
+
       var that = this;
       this.template = new QuizlyTemplater(this.container);
 
