@@ -99,3 +99,10 @@ The format for the data should be:
   }
 ]
 ```
+
+---
+#Contributers
+---
+to compile, navigate to the src/ fodler and run:
+ - tsc --output quizly.js
+ 
